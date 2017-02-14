@@ -1,0 +1,13 @@
+[Unit]
+Description=Docker Volume Plugin for CVMFS
+Documentation=https://gitlab.cern.ch/cloud-infrastructure/docker-volume-cvmfs
+After=docker.service
+
+[Service]
+Type=simple
+ExecStart=/bin/sh -c "/usr/bin/docker-volume-cvmfs >>/var/log/docker-volume-cvmfs.log 2>&1"
+Restart=on-failure
+LimitNOFILE=16384
+
+[Install]
+WantedBy=multi-user.target
