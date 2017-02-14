@@ -12,5 +12,4 @@ RUN rmdir /cvmfs
 ADD docker-volume-cvmfs /usr/sbin/docker-volume-cvmfs
 RUN chmod 755 /usr/sbin/docker-volume-cvmfs
 
-ADD docker-entrypoint.sh /
-ENTRYPOINT ["/docker-entrypoint.sh"]
+CMD ["/usr/sbin/docker-volume-cvmfs"]
