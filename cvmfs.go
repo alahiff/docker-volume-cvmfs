@@ -9,6 +9,7 @@ import (
 	"path/filepath"
 	"sync"
 	"syscall"
+	"strings"
 )
 
 // TagType is the type of cvmfs repo tag (hash or tag)
@@ -21,8 +22,7 @@ const (
 	TAG TagType = iota
 )
 
-var cvmfsBaseConfig = []string{"/etc/cvmfs/default.conf",
-	"/etc/cvmfs/default.local", "/etc/cvmfs/domain.d/cern.ch.conf"}
+var cvmfsBaseConfig = []string{"/etc/cvmfs/default.conf", "/etc/cvmfs/default.local"}
 
 var cvmfsUID = 995
 
@@ -56,15 +56,23 @@ func (c Cvmfs) prepare(repo string, tag string, tagType TagType) (string, error)
 	}
 	defer cvmfsConfig.Close()
 
-	for _, f := range cvmfsBaseConfig {
-		content, err := ioutil.ReadFile(f)
-		if err != nil {
-			return "", err
-		}
-		_, err = cvmfsConfig.Write(content)
-		if err != nil {
-			return "", err
-		}
+        domain := (strings.SplitN(repo, ".", 2))[1]
+        cvmfsDomainConfig := []string{"/etc/cvmfs/domain.d/"+domain+".conf", "/etc/cvmfs/domain.d/"+domain+".local"}
+        cvmfsFullConfig := append(cvmfsBaseConfig, cvmfsDomainConfig...)
+
+	for _, f := range cvmfsFullConfig {
+		fmt.Printf("Checking %s\n", f)
+                _, err := os.Stat(f)
+		if err == nil {
+			content, err := ioutil.ReadFile(f)
+			if err != nil {
+				return "", err
+			}
+			_, err = cvmfsConfig.Write(content)
+			if err != nil {
+				return "", err
+			}
+                }
 	}
 	cvmfsConfig.WriteString("\n")
 	cacheBase := c.cacheBase(repo, tag, tagType)
