@@ -61,7 +61,6 @@ func (c Cvmfs) prepare(repo string, tag string, tagType TagType) (string, error)
         cvmfsFullConfig := append(cvmfsBaseConfig, cvmfsDomainConfig...)
 
 	for _, f := range cvmfsFullConfig {
-		fmt.Printf("Checking %s\n", f)
                 _, err := os.Stat(f)
 		if err == nil {
 			content, err := ioutil.ReadFile(f)
