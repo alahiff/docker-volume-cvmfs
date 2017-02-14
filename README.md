@@ -4,6 +4,10 @@ This package provides management of cvmfs repositories in docker and kubernetes.
 
 It provides a nicer interface to handle cvmfs volume definitions.
 
+This is based on https://gitlab.cern.ch/cloud-infrastructure/docker-volume-cvmfs/ but with changes (in progress!) to make it useful to people outside of CERN:
+* ability to handle repositories from multiple domains, not just cern.ch
+* will read in /etc/cvmfs/domain.d/\<your_domain\>.local config files (previously these were ignored)
+
 ## Requirements
 
 Docker 1.9.x or above, Kubernetes 1.2.x or above.
