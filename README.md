@@ -9,7 +9,7 @@ This is based on https://gitlab.cern.ch/cloud-infrastructure/docker-volume-cvmfs
 * will read in /etc/cvmfs/domain.d/\<your_domain\>.local config files (previously these were ignored)
 * uses CVMFS_CACHE_BASE as defined in the usual config files (previously used per-repo caches in /var/cache & ignored the config files)
 * uses existing cvmfs uid rather than having a particular uid hard-wired (makes it easier to use existing CVMFS RPMs installed on a node)
-* doesn't set "CVMFS_AUTO_UPDATE=no" for each repository
+* doesn't set "CVMFS_AUTO_UPDATE=no" for each repository when the "trunk" (default) tag is used
 
 ## Requirements
 
