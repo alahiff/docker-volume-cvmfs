@@ -7,6 +7,7 @@ It provides a nicer interface to handle cvmfs volume definitions.
 This is based on https://gitlab.cern.ch/cloud-infrastructure/docker-volume-cvmfs/ but with changes (in progress!) to make it useful to people outside of CERN:
 * ability to handle repositories from multiple domains, not just cern.ch
 * will read in /etc/cvmfs/domain.d/\<your_domain\>.local config files (previously these were ignored)
+* uses CVMFS_CACHE_BASE as defined in the usual config files (previously forced to use per-repo caches in /var/cache)
 
 ## Requirements
 
